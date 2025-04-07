@@ -47,3 +47,7 @@
   animation: float 6s ease-in-out infinite;
 }
 
+html, body {
+  overflow-x: hidden;
+}
+

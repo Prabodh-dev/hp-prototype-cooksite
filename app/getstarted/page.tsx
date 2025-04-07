@@ -55,8 +55,25 @@ export default function GetStartedPage() {
   })
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
-    // Simulate API call to add cook to database
-    console.log("Form submitted:", values)
+    try {
+      const res = await fetch("http://localhost:1717/api/chef/new-chef", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(values),
+      })
+    
+      
+    
+      const data = await res.json()
+      console.log("Success:", data)
+    
+      setIsSubmitted(true)
+    } catch (error) {
+      console.error("Submission error:", error)
+    }
+    
 
     // Simulate a delay for the "database" operation
     await new Promise((resolve) => setTimeout(resolve, 1500))
