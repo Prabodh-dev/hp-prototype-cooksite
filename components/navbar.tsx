@@ -1,9 +1,10 @@
 "use client"
 
 import { Button } from "@/components/ui/button"
-import { ChefHat, Menu, X } from "lucide-react"
+import { Menu, X } from "lucide-react"
 import { motion } from "framer-motion"
 import Link from "next/link"
+import Image from "next/image"
 import { useState } from "react"
 import type React from "react"
 
@@ -21,8 +22,17 @@ export default function Navbar() {
       className="flex items-center justify-between px-6 py-4 backdrop-blur-sm border-b border-white/10 sticky top-0 z-50"
     >
       <Link href="/" className="flex items-center space-x-2">
-        <ChefHat className="w-8 h-8 text-amber-500" />
-        <span className="text-white font-medium text-xl">HomeCooks</span>
+        <Image 
+          src="/logo-2.png" 
+          alt="Home Plate Logo" 
+          width={64} 
+          height={64} 
+          className="rounded-sm" 
+        />
+        <div className="flex flex-col leading-tight">
+          <span className="text-white font-medium text-xl">Home Plate</span>
+          <span className="text-sm text-transparent bg-clip-text bg-gradient-to-r from-amber-400 to-orange-600">Bring home far from home</span>
+        </div>
       </Link>
 
       <div className="hidden md:flex items-center space-x-8">
@@ -92,4 +102,3 @@ function MobileNavLink({ href, onClick, children }: { href: string; onClick: () 
     </Link>
   )
 }
-
