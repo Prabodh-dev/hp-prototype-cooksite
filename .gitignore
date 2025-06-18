@@ -1,27 +1,55 @@
-# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+# Node modules
+node_modules/
+frontend/node_modules/
+backend/node_modules/
 
-# dependencies
-/node_modules
+# Build outputs
+.next/
+frontend/.next/
+frontend/out/
+backend/dist/
 
-# next.js
-/.next/
-/out/
-
-# production
-/build
-
-# debug
+# Logs
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
-.pnpm-debug.log*
+pnpm-debug.log*
+logs/
+*.log
 
-# env files
-.env*
+# OS files
+.DS_Store
+Thumbs.db
 
-# vercel
-.vercel
+# Env files
+.env
+.env.*
+frontend/.env
+frontend/.env.*
+backend/.env
+backend/.env.*
 
-# typescript
+# Editor directories and files
+.vscode/
+.idea/
+*.sublime-workspace
+*.sublime-project
+
+# Uploads and temp files
+backend/tmp/
+frontend/public/uploads/
+
+# Misc
+*.local
+*.swp
+
+# Ignore coverage reports
+coverage/
+
+# Ignore build artifacts
 *.tsbuildinfo
-next-env.d.ts
+
+# Ignore package lock files (optional, if using only one lock type)
+# package-lock.json
+yarn.lock
+pnpm-lock.yaml 

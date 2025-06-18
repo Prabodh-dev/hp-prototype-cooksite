@@ -2,10 +2,52 @@
 
 import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
-import { ChefHat, ArrowRight, ExternalLink } from "lucide-react";
+import { ChefHat, ArrowRight, ExternalLink, Truck } from "lucide-react";
 import Link from "next/link";
+import { useState, useEffect } from "react";
+import { toast } from "sonner";
 
 export default function Hero() {
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    // Check if user is authenticated
+    const token = localStorage.getItem('token');
+    if (token) {
+      try {
+        // Verify token is valid by decoding it
+        const payload = JSON.parse(atob(token.split('.')[1]));
+        const currentTime = Date.now() / 1000;
+        if (payload.exp > currentTime) {
+          setIsAuthenticated(true);
+        } else {
+          localStorage.removeItem('token');
+        }
+      } catch (error) {
+        localStorage.removeItem('token');
+      }
+    }
+    setLoading(false);
+  }, []);
+
+  const handleApplyClick = (type: 'chef' | 'delivery') => {
+    if (!isAuthenticated) {
+      toast.error("Authentication required", {
+        description: "Please login or sign in to apply for this position. Redirecting to Google login..."
+      });
+      localStorage.setItem('authAction', 'login');
+      window.location.href = 'http://localhost:5000/api/auth/google';
+      return;
+    }
+    // If authenticated, proceed to the application page
+    if (type === 'chef') {
+      window.location.href = '/apply-chef';
+    } else {
+      window.location.href = '/apply-delivery';
+    }
+  };
+
   return (
     <div className="relative min-h-[calc(100vh-76px)] flex items-center">
       <div className="container mx-auto px-6 relative z-10 py-12">
@@ -30,18 +72,35 @@ export default function Hero() {
             </h1>
 
             <p className="text-gray-400 text-lg mb-8">
-              Turn your kitchen into a thriving business. Join our platform as a home cook and connect with customers
+              Turn your kitchen into a thriving business. Join our platform as a home cook or delivery partner and connect with customers
               who are craving authentic, homemade meals.
             </p>
 
-            <div className="flex flex-col sm:flex-row items-center gap-4">
-              <Button size="lg" asChild className="bg-amber-600 hover:bg-amber-700 text-white px-8">
-                <Link href="/getstarted">
-                  Get Started
-                  <ArrowRight className="ml-2 h-5 w-5" />
-                </Link>
+            <div className="flex flex-col sm:flex-row items-center gap-4 mb-6">
+              <Button 
+                size="lg" 
+                className="bg-amber-600 hover:bg-amber-700 text-white px-8"
+                onClick={() => handleApplyClick('chef')}
+                disabled={loading}
+              >
+                <ChefHat className="mr-2 h-5 w-5" />
+                Apply for Chef
+                <ArrowRight className="ml-2 h-5 w-5" />
               </Button>
-              <Button size="lg" variant="outline" asChild className="text-white border-amber-500 hover:bg-amber-500/20">
+              <Button 
+                size="lg" 
+                className="bg-amber-600 hover:bg-amber-700 text-white px-8"
+                onClick={() => handleApplyClick('delivery')}
+                disabled={loading}
+              >
+                <Truck className="mr-2 h-5 w-5" />
+                Apply for Delivery
+                <ArrowRight className="ml-2 h-5 w-5" />
+              </Button>
+            </div>
+
+            <div className="flex items-center gap-4">
+              <Button size="lg" variant="ghost" asChild className="text-white hover:text-amber-400">
                 <Link href="https://app.homecooks.example.com">
                   Open App
                   <ExternalLink className="ml-2 h-4 w-4" />
