@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react"
 import { useSearchParams } from "next/navigation"
-import { toast } from "sonner"
+import { toast } from "react-hot-toast" // Changed from sonner to react-hot-toast which is more commonly used
 import Hero from "@/components/hero"
 import Navbar from "@/components/navbar"
 import { SparklesCore } from "@/components/sparkles"
@@ -27,13 +27,9 @@ export default function Home() {
       
       // Show success message based on action
       if (authAction === 'login') {
-        toast.success("Successfully logged in!", {
-          description: "Welcome back to Home Plate!"
-        })
+        toast.success("Successfully logged in! Welcome back to Home Plate!")
       } else {
-        toast.success("Successfully signed in!", {
-          description: "Welcome to Home Plate!"
-        })
+        toast.success("Successfully signed in! Welcome to Home Plate!")
       }
       
       // Clear the auth action
@@ -52,13 +48,9 @@ export default function Home() {
 
     if (error) {
       if (error === 'auth_failed') {
-        toast.error("Authentication failed", {
-          description: "Please try logging in again."
-        })
+        toast.error("Authentication failed. Please try logging in again.")
       } else if (error === 'test_login_failed') {
-        toast.error("Test login failed", {
-          description: "Please try again."
-        })
+        toast.error("Test login failed. Please try again.")
       }
       
       window.history.replaceState({}, document.title, window.location.pathname)
