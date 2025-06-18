@@ -61,7 +61,6 @@ export default function Home() {
         })
       }
       
-      // Clear URL parameters
       window.history.replaceState({}, document.title, window.location.pathname)
     }
   }, [searchParams])
